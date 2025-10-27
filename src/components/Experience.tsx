@@ -1,0 +1,177 @@
+﻿import styled from "styled-components";
+import { motion } from "framer-motion";
+import {
+  SectionContainer,
+  SectionContent,
+  SectionHeader,
+  SectionTitle as BaseTitle
+} from "./shared/Section.styled";
+
+interface Experience {
+  title: string;
+  period: string;
+  description: string;
+  type: "education" | "work";
+}
+
+const experiences: Experience[] = [
+  {
+    title: "Bachelor of Technology",
+    period: "2022 - Present",
+    description: "Computer Science Engineering\nSRM Institute of Science & Technology\nCGPA: 9.2/10",
+    type: "education"
+  },
+  {
+    title: "Freelancer",
+    period: "Summer 2024",
+    description: "Worked on various freelance projects in web development, delivering high-quality solutions to clients.",
+    type: "work"
+  },
+  {
+    title: "Hackathon Participation",
+    period: "March 2025",
+    description: "Participated in a university-level hackathon, collaborating in a team to build a project prototype within 24 hours.",
+    type: "work"
+  },
+  {
+    title: "Diploma in Programming",
+    period: "2025 - Present",
+    description: "Undergoing a diploma degree in programming from the prestigious IIT Madras to deepen my expertise.",
+    type: "education"
+  }
+];
+
+const ExperienceSection = () => {
+  return (
+    <SectionContainer id="experience">
+      <SectionContent>
+        <SectionHeader
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <BaseTitle>Experience & Education</BaseTitle>
+        </SectionHeader>
+        <Timeline>
+          {experiences.map((exp, index) => (
+            <TimelineItem
+              key={exp.title}
+              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: index * 0.2 }}
+              viewport={{ once: true }}
+              isEven={index % 2 === 0}
+            >
+              <TimelineContent>
+                <Badge type={exp.type}>
+                  {exp.type === "education" ? "" : ""}
+                </Badge>
+                <Title>{exp.title}</Title>
+                <Period>{exp.period}</Period>
+                <Description>{exp.description}</Description>
+              </TimelineContent>
+            </TimelineItem>
+          ))}
+        </Timeline>
+      </SectionContent>
+    </SectionContainer>
+  );
+};
+
+const Timeline = styled.div`
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 4px;
+    background: ${({ theme }) => theme.primary};
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px;
+    border-radius: 2px;
+
+    @media (max-width: 768px) {
+      left: 20px;
+    }
+  }
+`;
+
+const TimelineItem = styled(motion.div)<{ isEven: boolean }>`
+  padding: 10px 40px;
+  position: relative;
+  width: 50%;
+  left: ${({ isEven }) => (isEven ? "0" : "50%")};
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 25px;
+    left: 0;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: -10px;
+    background-color: ${({ theme }) => theme.background};
+    border: 4px solid ${({ theme }) => theme.primary};
+    top: 15px;
+    border-radius: 50%;
+    z-index: 1;
+    
+    ${({ isEven }) => !isEven && `
+      left: -10px;
+    `}
+
+    @media (max-width: 768px) {
+      left: 12px;
+    }
+  }
+`;
+
+const TimelineContent = styled.div`
+  padding: 20px;
+  background: ${({ theme }) => theme.cardBg || theme.background};
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+`;
+
+const Badge = styled.span<{ type: "education" | "work" }>`
+  position: absolute;
+  top: -15px;
+  left: 20px;
+  background: ${({ theme, type }) => type === "education" ? theme.primary : theme.accent};
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 1.2rem;
+`;
+
+const Title = styled.h3`
+  font-size: 1.3rem;
+  color: ${({ theme }) => theme.headline};
+  margin: 1rem 0 0.5rem;
+`;
+
+const Period = styled.span`
+  color: ${({ theme }) => theme.primary};
+  font-weight: 500;
+  display: block;
+  margin-bottom: 1rem;
+`;
+
+const Description = styled.p`
+  color: ${({ theme }) => theme.text};
+  line-height: 1.6;
+  white-space: pre-line;
+`;
+
+export default ExperienceSection;

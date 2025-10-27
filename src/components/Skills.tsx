@@ -1,0 +1,212 @@
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
+
+interface Skill {
+  name: string;
+  level: number;
+  icon: string;
+  category: 'language' | 'technology';
+}
+
+const skills: Skill[] = [
+  { name: 'Python', level: 85, icon: 'Py', category: 'language' },
+  { name: 'JavaScript', level: 80, icon: 'JS', category: 'language' },
+  { name: 'Java', level: 75, icon: 'J', category: 'language' },
+  { name: 'HTML5', level: 90, icon: 'H', category: 'language' },
+  { name: 'CSS3', level: 85, icon: 'C', category: 'language' },
+  { name: 'React.js', level: 80, icon: 'R', category: 'technology' },
+  { name: 'Node.js', level: 75, icon: 'N', category: 'technology' },
+  { name: 'Git & GitHub', level: 85, icon: 'G', category: 'technology' },
+  { name: 'MongoDB', level: 70, icon: 'M', category: 'technology' },
+  { name: 'MySQL', level: 75, icon: 'S', category: 'technology' },
+];
+
+import {
+  SectionContainer,
+  SectionContent,
+  SectionHeader,
+  SectionTitle as BaseTitle
+} from './shared/Section.styled';
+
+const Skills = () => {
+  const languages = skills.filter(skill => skill.category === 'language');
+  const technologies = skills.filter(skill => skill.category === 'technology');
+
+  return (
+    <SectionContainer id="skills">
+      <SectionContent>
+        <SectionHeader
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <BaseTitle>Technical Skills</BaseTitle>
+        </SectionHeader>
+        <SkillsGrid>
+          <SkillCategory
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <CategoryTitle>Programming Languages</CategoryTitle>
+          {languages.map((skill, index) => (
+            <SkillCard
+              key={skill.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+            >
+              <IconWrapper className={skill.name.toLowerCase()}>
+                {skill.icon}
+              </IconWrapper>
+              <SkillInfo>
+                <SkillName>{skill.name}</SkillName>
+                <ProgressBar>
+                  <Progress width={skill.level} />
+                  <ProgressText>{skill.level}%</ProgressText>
+                </ProgressBar>
+              </SkillInfo>
+            </SkillCard>
+          ))}
+        </SkillCategory>
+
+        <SkillCategory
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
+          <CategoryTitle>Technologies & Tools</CategoryTitle>
+          {technologies.map((skill, index) => (
+            <SkillCard
+              key={skill.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+            >
+              <IconWrapper className={skill.name.toLowerCase().replace('.', '')}>
+                {skill.icon}
+              </IconWrapper>
+              <SkillInfo>
+                <SkillName>{skill.name}</SkillName>
+                <ProgressBar>
+                  <Progress width={skill.level} />
+                  <ProgressText>{skill.level}%</ProgressText>
+                </ProgressBar>
+              </SkillInfo>
+            </SkillCard>
+          ))}
+        </SkillCategory>
+      </SkillsGrid>
+    </SectionContent>
+    </SectionContainer>
+  );
+};
+
+const SkillsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media (max-width: 968px) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+`;
+
+const SkillCategory = styled(motion.div)`
+  background: ${({ theme }) => theme.cardBg};
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+`;
+
+const CategoryTitle = styled.h3`
+  font-size: 1.8rem;
+  color: ${({ theme }) => theme.headline};
+  margin-bottom: 2rem;
+  text-align: center;
+`;
+
+const SkillCard = styled(motion.div)`
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: ${({ theme }) => theme.background};
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateX(10px);
+  }
+`;
+
+const IconWrapper = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  margin-right: 1rem;
+
+  &.python { background: linear-gradient(135deg, #3776ab, #ffd343); }
+  &.javascript { background: linear-gradient(135deg, #f7df1e, #323330); }
+  &.java { background: linear-gradient(135deg, #ed8b00, #5382a1); }
+  &.html5 { background: linear-gradient(135deg, #e34f26, #f06529); }
+  &.css3 { background: linear-gradient(135deg, #1572b6, #33a9dc); }
+  &.reactjs { background: linear-gradient(135deg, #61dafb, #282c34); }
+  &.nodejs { background: linear-gradient(135deg, #339933, #68a063); }
+  &.git { background: linear-gradient(135deg, #f05032, #362d27); }
+  &.mongodb { background: linear-gradient(135deg, #47a248, #4db33d); }
+  &.mysql { background: linear-gradient(135deg, #4479a1, #f29111); }
+`;
+
+const SkillInfo = styled.div`
+  flex: 1;
+`;
+
+const SkillName = styled.h4`
+  font-size: 1.1rem;
+  color: ${({ theme }) => theme.headline};
+  margin-bottom: 0.5rem;
+`;
+
+const ProgressBar = styled.div`
+  position: relative;
+  height: 8px;
+  background: ${({ theme }) => theme.border};
+  border-radius: 4px;
+  overflow: hidden;
+`;
+
+const Progress = styled.div<{ width: number }>`
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: ${({ theme }) => theme.primary};
+  width: ${({ width }) => width}%;
+  border-radius: 4px;
+  transition: width 1s ease;
+`;
+
+const ProgressText = styled.span`
+  position: absolute;
+  right: -30px;
+  top: -5px;
+  font-size: 0.8rem;
+  color: ${({ theme }) => theme.text};
+`;
+
+export default Skills;
