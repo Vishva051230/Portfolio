@@ -26,22 +26,22 @@ const Contact = () => {
         >
           <Links>
             <LinkItem
-              href="mailto:your.email@example.com"
+              href="vishvakumar972@gmail.com"
               whileHover={{ y: -2 }}
               whileTap={{ y: 1 }}
             >
               <LinkIcon>📧</LinkIcon>
-              <span>your.email@example.com</span>
+              <span>vishvakumar972@gmail.com</span>
             </LinkItem>
             <LinkItem
-              href="https://github.com/yourusername"
+              href="https://github.com/Vishva051230"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ y: -2 }}
               whileTap={{ y: 1 }}
             >
               <LinkIcon>🌐</LinkIcon>
-              <span>github.com/yourusername</span>
+              <span>github.com/Vishva051230</span>
             </LinkItem>
             <LinkItem
               href="https://linkedin.com/in/yourusername"
@@ -51,7 +51,7 @@ const Contact = () => {
               whileTap={{ y: 1 }}
             >
               <LinkIcon>💼</LinkIcon>
-              <span>linkedin.com/in/yourusername</span>
+              <span>https://www.linkedin.com/in/vishva-kumar</span>
             </LinkItem>
           </Links>
 

@@ -20,19 +20,15 @@ const projects: Project[] = [
     title: "E-Commerce Website",
     description: "A full-stack e-commerce platform with user authentication, payment processing, and admin dashboard.",
     icon: "🌐",
-    technologies: ["React", "Node.js", "MongoDB", "Stripe API"]
+    technologies: ["React", "Node.js", "MongoDB", "Stripe API"],
+    link: "https://github.com/Vishva051230/e-comm"
   },
   {
-    title: "Task Management App",
-    description: "A collaborative task management application with real-time updates and team collaboration features.",
-    icon: "📱",
-    technologies: ["Vue.js", "Socket.io", "Express", "PostgreSQL"]
-  },
-  {
-    title: "Weather Forecast Bot",
-    description: "An intelligent chatbot that provides weather forecasts and recommendations based on location.",
-    icon: "🤖",
-    technologies: ["Python", "TensorFlow", "Flask", "API Integration"]
+    title: "Student Portal",
+    description: "A comprehensive student management system developed for Smart India Hackathon, featuring academic tracking, attendance management, and student resources.",
+    icon: "👨‍🎓",
+    technologies: ["React", "Node.js", "MongoDB", "Express"],
+    link: "https://github.com/Vishva051230/Student-portal-sih"
   }
 ];
 
@@ -60,7 +56,15 @@ const Projects = () => {
             >
               <ProjectIcon>{project.icon}</ProjectIcon>
               <ProjectContent>
-                <ProjectTitle>{project.title}</ProjectTitle>
+                <ProjectTitle>
+                  {project.link ? (
+                    <ProjectLink href={project.link} target="_blank" rel="noopener noreferrer">
+                      {project.title} <LinkIcon>🔗</LinkIcon>
+                    </ProjectLink>
+                  ) : (
+                    project.title
+                  )}
+                </ProjectTitle>
                 <ProjectDescription>{project.description}</ProjectDescription>
                 <TechStack>
                   {project.technologies.map(tech => (
@@ -131,6 +135,22 @@ const TechTag = styled.span`
   border-radius: 50px;
   font-size: 0.9rem;
   font-weight: 500;
+`;
+
+const ProjectLink = styled.a`
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const LinkIcon = styled.span`
+  font-size: 1rem;
 `;
 
 export default Projects;
